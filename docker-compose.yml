@@ -5,7 +5,7 @@ services:
       args:
         UID: ${UID}
         GID: ${GID}
-    container_name: alerts-app
+    container_name: vessel-attendances-app
     env_file:
       - .env
     volumes:
