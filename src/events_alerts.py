@@ -362,7 +362,7 @@ def validate_dataframe_columns(df: pd.DataFrame, required_columns: List[str], co
 # ---------------------------------------
 # SQL Query Loader
 # ---------------------------------------
-def load_sql_query(query_file='EventHotWork.sql') -> str:
+def load_sql_query(query_file='VesselAttendances.sql') -> str:
     """
     Load SQL query from queries directory with path traversal protection.
 
@@ -421,6 +421,7 @@ def load_sql_query(query_file='EventHotWork.sql') -> str:
 # ---------------------------------------
 # Teams Message Function
 # ---------------------------------------
+# HAVE NOT UPDATED SINCE HOT WORKS SPECS
 def send_teams_message(df, run_time):
     """Send formatted message to Microsoft Teams channel"""
     if not TEAMS_WEBHOOK_URL:
@@ -444,7 +445,7 @@ def send_teams_message(df, run_time):
             summary_section = pymsteams.cardsection()
             summary_section.activityTitle("Report Summary")
             summary_section.activitySubtitle(run_time.strftime('%A, %B %d, %Y at %H:%M %Z'))
-            summary_section.addFact("Type", "Permit")
+            summary_section.addFact("Type", "Vessel Attendances")
             summary_section.addFact("Period", f"Last {EVENT_LOOKBACK_DAYS} days")
             summary_section.addFact("Frequency", f"{duration(SCHEDULE_FREQUENCY)}")
             summary_section.addFact("Results", f"**{len(df)}** event{'s' if len(df) != 1 else ''}")
@@ -516,8 +517,8 @@ def make_plain_text(df, run_time):
     """Generate plain text email dynamically based on available columns"""
     header = f"""AlertDev | {run_time.strftime('%Y-%m-%d %H:%M %Z')}
 
-Found {len(df)} event(s) matching criteria.
-"""
+    Found {len(df)} event(s) matching criteria.
+    """
 
     if df.empty:
         return header + f"\nNo results found.\n\n---\nAutomated report from {COMPANY_NAME}."
